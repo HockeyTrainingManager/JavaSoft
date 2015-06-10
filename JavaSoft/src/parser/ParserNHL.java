@@ -12,12 +12,14 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import classobject.ParserGame;
+
 public class ParserNHL {
 
 	Element table;
 	ArrayList<String> lstLiens = new ArrayList<String>();
 	
-	public void get()
+	public void get(String lastSynch)
 	{
 		String html;
 		try {
@@ -45,7 +47,7 @@ public class ParserNHL {
 							if (e2.attr("class").equals("leftAlignedColumn"))
 							{
 								Element e3 = e2.select("a").first();
-								lstLiens.add(e3.attr("href"));
+								lstLiens.add(e3.attr("href").replace("http://blackhawks.nhl.com/gamecenter/en/recap?id=", ""));
 							}
 						}
 					}
@@ -53,6 +55,21 @@ public class ParserNHL {
 				
 				//changer recap dans url par boxscore
 				String test = "";
+				
+				for(int i = 0; i < lstLiens.size(); i++)
+				{
+					if (lstLiens.get(i).equals(lastSynch))
+						break;
+					
+					try {
+						ParserGame.updateGame("" + lstLiens.get(i), "");
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
+				}
+				
+				System.err.println("synch finish");
+				
 	}
 
 	
