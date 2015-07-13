@@ -1,40 +1,22 @@
 import java.io.File;
 
-import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import classobject.Game;
 import classobject.Player;
-
 import java.io.IOException;
 
+import javax.xml.parsers.DocumentBuilder;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import parser.ParserNHL;
 
 
-public class main {
+public class Utils {
 
-
-	static Game g1;
-	static Game g2;
 	
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		ParserNHL p = new ParserNHL();
-		File folder = new File("/Users/robinpauquet/desktop/projet_annuel/");
-		//listFilesForFolder(folder);
-		p.get(getLastFile(folder));
-		System.err.println("coucou");
-	
-	}
-	
-	public static void Last2GamesToClass(File folder)
+	public static void Last2GamesToClass(File folder, Game g1, Game g2)
 	{
 		int size = folder.listFiles().length;
 		File game1 = folder.listFiles()[size - 1];
@@ -42,6 +24,13 @@ public class main {
 
 		g1 = FileToGame(game1);
 		g2 = FileToGame(game2);
+	}
+	
+	public static Game LastGame(File folder)
+	{
+		int size = folder.listFiles().length;
+		File game1 = folder.listFiles()[size - 1];
+		return FileToGame(game1);
 	}
 	
 	public static Game FileToGame(File game)
@@ -53,6 +42,7 @@ public class main {
 			Document doc = dBuilder.parse(game);
 			doc.getDocumentElement().normalize();
 			retour.win = doc.getElementsByTagName("win").item(0).getTextContent();
+			retour.adv = doc.getElementsByTagName("adv").item(0).getTextContent();
 			retour.date = doc.getElementsByTagName("date").item(0).getTextContent();
 			NodeList nList = doc.getElementsByTagName("player");
 			for (int temp = 0; temp < nList.getLength(); temp++) {
@@ -92,15 +82,8 @@ public class main {
 	}
 	
 
-	public static String getLastFile(File folder) {
-		if (folder.listFiles().length == 0)
-			return "";
-		return folder.listFiles()[0].getName().replace(".xml", "");
-	}
-
-
 	
-	public static int getForme(String id)
+	public static int getForme(String id, Game g1, Game g2)
 	{
 		int retour = 0;
 		Player p1 = g1.getPlayerById(id);
@@ -160,7 +143,7 @@ public class main {
 			return -1;
 	}
 	
-	public static boolean exerciceShoot()
+	public static boolean exerciceShoot(Game g1, Game g2)
 	{
 
 		double ratio1 = g1.getAllBut() / g1.getAllShoot();
@@ -171,4 +154,5 @@ public class main {
 		
 		return false;
 	}
+
 }
