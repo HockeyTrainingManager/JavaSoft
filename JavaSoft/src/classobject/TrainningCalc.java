@@ -4,6 +4,9 @@ import java.util.ArrayList;
 
 
 public class TrainningCalc {
+	
+	
+	
 	public static ArrayList<String> getTrainningPlayer(Player p1, Player p2)
 	{
 		ArrayList<String> lstTrainning = new ArrayList<String>();
@@ -133,7 +136,8 @@ public class TrainningCalc {
 	{
 		int i1 = Integer.parseInt(s1);
 		int i2 = Integer.parseInt(s2);
-		
+		if (i2 == 0)
+			return 0;
 		return i1/i2;
 	}
 	

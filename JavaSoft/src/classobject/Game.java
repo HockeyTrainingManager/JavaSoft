@@ -17,6 +17,14 @@ public class Game {
 			return false;
 	}
 	
+	public String getResult()
+	{
+		if (isWin())
+			return "Victoire";
+		else
+			return "Défaite";
+	}
+	
 	public ArrayList<Player> players = new ArrayList<Player>();
 	
 	public Player getPlayerById(String id)

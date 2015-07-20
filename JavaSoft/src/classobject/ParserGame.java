@@ -19,6 +19,8 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import parser.ParserNHL;
+
 
 public class ParserGame {
 	public static void updateGame(String name, String date) throws IOException
@@ -50,8 +52,14 @@ public class ParserGame {
 	    {
 	    	Player p = new Player();
 	    	Element e = stat.child(goodChild).getElementsByClass("statsValues").get(i);
+	    	try {
 	    	p.id = e.child(1).child(0).attr("href").replace("http://blackhawks.nhl.com/club/player.htm?id=", "");
-	    	p.name = e.child(1).child(0).text();
+	    	} catch (IndexOutOfBoundsException ioe)
+	    	{
+	    		p.id = "0";
+	    		ioe.printStackTrace();
+	    	}
+	    	p.name = e.child(1).text();
 	    	p.position = e.child(2).text();
 	    	p.but = e.child(3).text();
 	    	p.assist = e.child(4).text();
@@ -128,7 +136,7 @@ public class ParserGame {
 		TransformerFactory transformerFactory = TransformerFactory.newInstance();
 		Transformer transformer = transformerFactory.newTransformer();
 		DOMSource source = new DOMSource(doc);
-		StreamResult result = new StreamResult(new File("/Users/robinpauquet/desktop/projet_annuel/" + nom + ".xml"));
+		StreamResult result = new StreamResult(new File(ParserNHL.Endroit + nom + ".xml"));
 		transformer.transform(source, result);
 		 
 		System.out.println("File saved!");

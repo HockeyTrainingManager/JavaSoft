@@ -33,6 +33,13 @@ public class Utils {
 		return FileToGame(game1);
 	}
 	
+	public static Game AnteLastGame(File folder)
+	{
+		int size = folder.listFiles().length;
+		File game1 = folder.listFiles()[size - 2];
+		return FileToGame(game1);
+	}
+	
 	public static Game FileToGame(File game)
 	{
 		Game retour = new Game();
@@ -44,6 +51,7 @@ public class Utils {
 			retour.win = doc.getElementsByTagName("win").item(0).getTextContent();
 			retour.adv = doc.getElementsByTagName("adv").item(0).getTextContent();
 			retour.date = doc.getElementsByTagName("date").item(0).getTextContent();
+			retour.score = doc.getElementsByTagName("score").item(0).getTextContent();
 			NodeList nList = doc.getElementsByTagName("player");
 			for (int temp = 0; temp < nList.getLength(); temp++) {
 				Node nNode = nList.item(temp);
@@ -51,6 +59,7 @@ public class Utils {
 					Element eElement = (Element) nNode;
 					Player p = new Player();
 					p.id = eElement.getElementsByTagName("id").item(0).getTextContent();
+					p.name = eElement.getElementsByTagName("name").item(0).getTextContent();
 					p.position = eElement.getElementsByTagName("position").item(0).getTextContent();
 					p.but = eElement.getElementsByTagName("but").item(0).getTextContent();
 					p.assist = eElement.getElementsByTagName("assist").item(0).getTextContent();

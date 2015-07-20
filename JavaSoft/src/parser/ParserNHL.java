@@ -1,8 +1,10 @@
 package parser;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
@@ -18,6 +20,43 @@ public class ParserNHL {
 
 	Element table;
 	ArrayList<String> lstLiens = new ArrayList<String>();
+	public static String Endroit = System.getProperty("user.dir") + "/TMP/";
+	
+	public void init()
+	{
+		if (!netIsAvailable())
+		{
+			System.err.println("No internet connection");
+			return;
+		}
+		File dir = new File(Endroit);
+		if (!dir.exists()) {
+		    System.out.println("creating directory: " + Endroit);
+		    boolean result = false;
+
+		    try{
+		        dir.mkdir();
+		        result = true;
+		    } 
+		    catch(SecurityException se){
+		        se.printStackTrace();
+		    }        
+		    if(result) {    
+		        System.out.println("DIR created");  
+		    }
+		    get("");
+		} else {
+			if (dir.listFiles().length > 0) {
+				File lg = dir.listFiles()[dir.listFiles().length - 1];
+				System.err.println("" + lg.getName().replace(".xml", ""));
+				get("" + lg.getName().replace(".xml", ""));
+			} else {
+				get("");
+			}
+		}
+		
+		
+	}
 	
 	public void get(String lastSynch)
 	{
@@ -86,4 +125,18 @@ public class ParserNHL {
 
         return a.toString();
     }
+	
+	
+	private static boolean netIsAvailable() {                                                                                                                                                                                                 
+	    try {                                                                                                                                                                                                                                 
+	        final URL url = new URL("http://www.google.com");                                                                                                                                                                                 
+	        final URLConnection conn = url.openConnection();                                                                                                                                                                                  
+	        conn.connect();                                                                                                                                                                                                                   
+	        return true;                                                                                                                                                                                                                      
+	    } catch (MalformedURLException e) {                                                                                                                                                                                                   
+	        throw new RuntimeException(e);                                                                                                                                                                                                    
+	    } catch (IOException e) {                                                                                                                                                                                                             
+	        return false;                                                                                                                                                                                                                     
+	    }                                                                                                                                                                                                                                     
+	}    
 }
