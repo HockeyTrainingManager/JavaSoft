@@ -92,7 +92,7 @@ public class MainActivity extends JFrame{
 				ShowTeam();
 			}
 		});
-	    JButton btnSetting = new JButton("Setting");
+	    JButton btnSetting = new JButton("A propos");
 	    btnSetting.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -105,7 +105,7 @@ public class MainActivity extends JFrame{
 	    
 	    panelMenu.add(btnShowLast);
 	    panelMenu.add(btnPlayer);
-	    panelMenu.add(btnTeam);
+	   // panelMenu.add(btnTeam);
 	    panelMenu.add(btnSetting);
 
 	    panelContent = new JPanel();
@@ -223,7 +223,7 @@ public class MainActivity extends JFrame{
 				ep.setPlayerPoste(p.position);
 				for (String s : TrainningCalc.getTrainningPlayer(p, p2))
 				{
-					ep.getExercices().add(Exercice.getExerciceByType());
+					ep.getExercices().add(Exercice.getExerciceByType(s));
 				}
 				export.getLstExport().add(ep);
 			}
@@ -255,7 +255,25 @@ public class MainActivity extends JFrame{
 	 
 	 public void ShowSetting()
 	 {
-		 System.err.printf("Setting");
+		 getContentPane().remove(1);
+		 panelContent = new JPanel();
+		 panelContent.setLayout(new GridLayout(0, 1));
+		 String apropos = "<html><h1>Hockey Trainning Manager </h1><br />"
+		 		+ "Conçu par :<br />"
+		 		+ "Robin PAUQUET<br />"
+		 		+ "Bruno VACQUEREL<br />"
+		 		+ "Charly MANAI<br />"
+		 		+ "<br />"
+		 		+ "<h2>Mais où est Charly ?</h2>"
+		 		+ "Il était une fois un jeune, mais pas trop, chevalier dans la contrée SEIG quand il décida de partir à l'aventure.<br />"
+		 		+ "Il parti ainsi sur son fidèle destrier 'Baième de oublevé' et entra par inadvertance sur le territoire de SANA, un terrible dragon de la contrée NAVA. <br />"
+		 		+ "Charly n'avais point envie de combattre ce terrible animal, il avait passer l'âge de faire des efforts."
+		 		+ "Mais ce ne fut pas cette aveu qui persuada le dragon, <span style=\"color:red\">SANA ne s</span>e laissa par importuner plus longtemps par cette étranger qui fini en barbecue à dragon.<br />"
+		 		+ "FIN"
+		 		+ "</html>";
+		 panelContent.add(new JLabel(apropos));
+		 getContentPane().add(panelContent, BorderLayout.CENTER);
+		 getContentPane().validate();
 	 }
 	 
 	 

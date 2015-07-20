@@ -19,6 +19,7 @@ public class PluginLoader {
 	public PluginLoader()
 	{
 		this.classPlugins = new ArrayList();
+		System.err.println("" + System.getProperty("user.dir"));
 		File dir = new File(System.getProperty("user.dir"));
 		File[] files = dir.listFiles(new FilenameFilter() {
 		    public boolean accept(File dir, String name) {
