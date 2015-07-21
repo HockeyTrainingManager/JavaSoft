@@ -2,6 +2,7 @@ package classobject;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -124,8 +125,19 @@ public class ParserGame {
 			players.appendChild(player);
 			
 			Field[] fields = Player.class.getFields();
+			
 			for (Field field : fields) {
-				org.w3c.dom.Element variable = doc.createElement(field.getName());
+				Annotation[] annotations = field.getDeclaredAnnotations();
+				org.w3c.dom.Element variable = null;
+				/*if(annotations.length > 0)
+				{
+					Annotation anno = annotations[0];
+					variable = doc.createElement(((MyAnnotation)annotations[0]).exportName());
+				}else
+					*/
+				variable = doc.createElement(field.getName());
+				
+				
 				variable.appendChild(doc.createTextNode(ReflectUtils.getValueOf(p, field.getName()).toString()));
 				player.appendChild(variable);
 				System.out.println(field.getName());

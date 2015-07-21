@@ -2,7 +2,10 @@
 package classobject;
 
 public class Player {
+	
+	@MyAnnotation(exportName="idannotation")
 	public String id = "0";
+	
 	public String name = "0";
 	public String position = "0";
 	public String but = "0";
